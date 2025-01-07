@@ -6,7 +6,7 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: [ "main" ]
+    branches: [ "release" ]
 
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -27,5 +27,5 @@ jobs:
 
       - name: "Mostrando variables de entorno"
         run: |
-          echo "Esto es el valor de platform: ${{env.platform}}"
-          echo "Region: ${{env.region}}"
+          echo "Esto es el valor de platform: ${{env.platform}} desde rama release"
+          echo "Region: ${{env.region}} - release branch"
