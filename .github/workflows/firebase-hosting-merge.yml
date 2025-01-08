@@ -17,12 +17,12 @@ jobs:
       - name: Build project
         run: npm run build
       - name: Archive production artifact
-        uses: actions/upload-artifact@main
+        uses: actions/upload-artifact@v4
         with:
           name: build
           path: /dist/meal-products-angular
       - name: Download Artifact
-        uses: actions/download-artifact@main
+        uses: actions/download-artifact@v4
         with:
           name: build
           path: /dist/meal-products-angular
