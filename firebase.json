@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/meal-products-frontend",
+    "public": "dist/meal-products-frontend/browser",
     "ignore": [
       "firebase.json",
       "**/.*",
