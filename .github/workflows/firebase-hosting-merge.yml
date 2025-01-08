@@ -20,12 +20,12 @@ jobs:
         uses: actions/upload-artifact@main
         with:
           name: build
-          path: /dist/meal-products-frontend
+          path: /dist/meal-products-angular
       - name: Download Artifact
         uses: actions/download-artifact@main
         with:
           name: build
-          path: /dist/meal-products-frontend
+          path: /dist/meal-products-angular
       - name: Deploy
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
