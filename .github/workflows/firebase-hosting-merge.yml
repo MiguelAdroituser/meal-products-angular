@@ -14,6 +14,10 @@ jobs:
         uses: actions/checkout@main
       - name: Install Dependencies
         run: npm i
+      - name: Start Angular App
+        run: npm start &
+      - name: Wait for Angular to Start
+        run: npx wait-on http://localhost:4200
       - name: Run Tests
         run: npm run test:run
       - name: Build project
