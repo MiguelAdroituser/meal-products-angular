@@ -19,14 +19,14 @@ export class LayoutPageComponent implements OnInit {
 
   ngOnInit(): void {
 
-    const nameEncripted = localStorage.getItem('name') || '';
+    /* const nameEncripted = localStorage.getItem('name') || '';
     const emailEncripted = localStorage.getItem('email') || '';
 
     const nameUser = this.authService.decrypt(nameEncripted,'name' );
     const emailUser = this.authService.decrypt(emailEncripted,'email' );
 
     if ( nameUser ) this.name = nameUser;
-    if ( emailUser ) this.email = emailUser;
+    if ( emailUser ) this.email = emailUser; */
 
   }
 

@@ -1,7 +1,7 @@
 
 describe('create new meal products', () => {
 
-  before(() => {
+  /* before(() => {
     const name = 'miguel@gmail.com';
     const password = '12345678';
 
@@ -116,7 +116,7 @@ describe('create new meal products', () => {
 
   after(() => {
     cy.get('[data-cy="Logout"]').click();
-  });
+  }); */
 
 
 })

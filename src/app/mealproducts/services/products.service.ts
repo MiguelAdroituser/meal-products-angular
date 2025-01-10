@@ -84,7 +84,8 @@ export class ProductsService {
   }
 
   getHeaders(): AuthHeaders {
-    const token =  this.authSerice.decrypt( localStorage.getItem('token') || '', 'token' );
+    // const token =  this.authSerice.decrypt( localStorage.getItem('token') || '', 'token' );
+    const token =  '';
 
     const headers = new HttpHeaders()
       .set('Authorization', `Bearer ${ token }`);

@@ -1,6 +1,6 @@
 describe('Delete meal products', () => {
 
-  before(() => {
+  /* before(() => {
 
     const name = 'miguel@gmail.com';
     const password = '12345678';
@@ -39,6 +39,6 @@ describe('Delete meal products', () => {
 
   after(() => {
      cy.get('[data-cy="Logout"]').click();
-  });
+  }); */
 
 })
