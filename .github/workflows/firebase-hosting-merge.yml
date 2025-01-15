@@ -5,42 +5,116 @@ name: Deploy to Firebase Hosting on merge
 on:
   push:
     branches:
-      - release
+      - main
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@main
+
       - name: Install Dependencies
-        run: npm i
+        run: npm ci
+
       - name: Start Angular App
-        run: npm start &
+        run: npm start &> angular_start.log &
+
+      - name: Debug Angular Start Logs
+        run: cat angular_start.log
+
       - name: Wait for Angular to Start
-        run: npx wait-on http://localhost:4200
+        run: npx wait-on --timeout 60000 http://localhost:4200
+
       - name: Run Tests
         run: npm run test:run
+
       - name: Stop Angular App
-        run: kill $(lsof -t -i:4200)
+        run: kill $(lsof -t -i:4200) || echo "No process found on port 4200"
+
       - name: Build project
         run: npm run build
+
       - name: Debug Build Output
         run: ls -R dist
-      - name: Archive production artifact
-        uses: actions/upload-artifact@main
-        with:
-          name: build
-          path: dist/meal-products-frontend/browser
-      - name: Download Artifact
-        uses: actions/download-artifact@main
-        with:
-          name: build
-          path: dist/meal-products-frontend/browser
-      - name: Deploy
-        uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_MEALS_PRODUCTS_ANGULAR }}
-          channelId: live
-          projectId: meals-products-angular
 
+      # -----------------------------------------
+      # Uncomment the following steps if needed
+      # - name: Archive production artifact
+      #   uses: actions/upload-artifact@main
+      #   with:
+      #     name: build
+      #     path: dist/meal-products-frontend/browser
+      #
+      # - name: Download Artifact
+      #   uses: actions/download-artifact@main
+      #   with:
+      #     name: build
+      #     path: dist/meal-products-frontend/browser
+      #
+      # - name: Deploy
+      #   uses: FirebaseExtended/action-hosting-deploy@v0
+      #   with:
+      #     repoToken: ${{ secrets.GITHUB_TOKEN }}
+      #     firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_MEALS_PRODUCTS_ANGULAR }}
+      #     channelId: live
+      #     projectId: meals-products-angular
+
+      # solutions of chatgpt
+
+      # - name: Checkout Code
+      #   uses: actions/checkout@v3
+
+      # - name: Check Installed Node.js and npm
+      #   run: |
+      #     node -v
+      #     npm -v
+
+      # - name: Install Dependencies
+      #   run: npm install
+
+      # - name: Build Angular App
+      #   run: npm run build
+
+      # - name: Start Angular App
+      #   run: |
+      #     npm start -- --host 0.0.0.0 &  # Bind Angular to all interfaces
+
+      # - name: Wait for App to Start
+      #   run: npx wait-on http://localhost:4200 --timeout 30000  # Increased timeout
+
+      # - name: Verify Server Running
+      #   run: curl http://localhost:4200  # Check if the server is accessible
+
+      # - name: Clean npm Cache and Reinstall Cypress
+      #   run: |
+      #     # Clean npm cache to avoid old or conflicting dependencies
+      #     npm cache clean --force
+      #     # Reinstall Cypress specified in package.json
+      #     npm install cypress@^13.6.4
+
+      # - name: Install Missing Dependencies
+      #   run: |
+      #     # Install missing libraries
+      #     sudo apt-get update
+      #     sudo apt-get install -y \
+      #       libnss3 \
+      #       libatk-bridge2.0-0 \
+      #       libatk1.0-0 \
+      #       libx11-xcb1 \
+      #       libxcomposite1 \
+      #       libxdamage1 \
+      #       libxrandr2 \
+      #       libcups2 \
+      #       xvfb \
+      #       libgtk-3-0 \
+      #       libgbm1 \
+      #       libasound2
+
+      # - name: Run E2E Tests
+      #   run: |
+      #     export DISPLAY=:99.0
+      #     Xvfb :99 &  # Start Xvfb on display :99
+      #     npm run test:run
+
+      # - name: Stop Angular App
+      #   run: kill $(lsof -t -i:4200) || echo "No process found on port 4200"
