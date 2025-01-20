@@ -63,8 +63,143 @@
       #       - main
 
       # jobs:
-        # start_angular_app:
+      #   start_angular_app:
+      #     runs-on: ubuntu-22.04
+      #     container:
+      #       image: ghcr.io/catthehacker/ubuntu:full-24.04
+      #       options: --user root
+
+      #     steps:
+      #       - name: Checkout repository
+      #         uses: actions/checkout@main
+
+      #       - name: Install Dependencies
+      #         run: npm ci
+
+      #       - name: Build project
+      #         run: npm run build
+
+      #       - name: Setup Cypress
+      #         uses: cypress-io/github-action@v2
+      #         with:
+      #           start: npm start
+      #           config-file: cypress.config.ts
+
+          
+            # - name: Archive production artifact
+            #   uses: actions/upload-artifact@main
+            #   with:
+            #     name: build
+            #     path: dist/meal-products-frontend/browser
+            
+            # - name: Download Artifact
+            #   uses: actions/download-artifact@main
+            #   with:
+            #     name: build
+            #     path: dist/meal-products-frontend/browser
+            
+            # - name: Deploy
+            #   uses: FirebaseExtended/action-hosting-deploy@v0
+            #   with:
+            #     repoToken: ${{ secrets.GITHUB_TOKEN }}
+            #     firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_MEALS_PRODUCTS_ANGULAR }}
+            #     channelId: live
+            #     projectId: meals-products-angular
+
+
+      # CI/CD Github Actions
+      # name: Deploy to Firebase Hosting on merge
+
+      # on:
+      #   push:
+      #     branches:
+      #       - main
+      
+      # jobs:
+      #   start_angular_app:
+      #     runs-on: ubuntu-22.04
+
+      #     steps:
+      #     - name: Checkout repository
+      #       uses: actions/checkout@main
+
+      #     - name: Install Dependencies
+      #       run: npm i
+
+      #     - name: Start Angular App
+      #       run: npm start &
+
+      #     - name: Run Tests
+      #       run: npm run test:run
+
+      #     - name: Build project
+      #       run: npm run build
+
+      #     - name: Debug Build Output
+      #       run: ls -R dist
+
+      #     - name: Archive production artifact
+      #       uses: actions/upload-artifact@main
+      #       with:
+      #         name: build
+      #         path: dist/meal-products-frontend/browser
+
+      #     - name: Download Artifact
+      #       uses: actions/download-artifact@main
+      #       with:
+      #         name: build
+      #         path: dist/meal-products-frontend/browser
+
+      #     - name: Deploy
+      #       uses: FirebaseExtended/action-hosting-deploy@v0
+      #       with:
+      #         repoToken: ${{ secrets.GITHUB_TOKEN }}
+      #         firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_MEALS_PRODUCTS_ANGULAR }}
+      #         channelId: live
+      #         projectId: meals-products-angular
+
+
+      name: Deploy to Firebase Hosting on merge
+
+      on:
+        push:
+          branches:
+            - main
+
+      jobs:
+        # Job for GitHub Actions (no container)
+        deploy_github:
+          runs-on: ubuntu-22.04
+          
+          steps:
+            - name: Checkout repository
+              uses: actions/checkout@main
+
+            - name: Install Dependencies
+              run: npm i
+
+            - name: Start Angular App
+              run: npm start &
+
+            - name: Run Tests
+              run: npm run test:run
+
+            - name: Build project
+              run: npm run build
+
+            - name: Deploy
+              uses: FirebaseExtended/action-hosting-deploy@v0
+              with:
+                repoToken: ${{ secrets.GITHUB_TOKEN }}
+                firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_MEALS_PRODUCTS_ANGULAR }}
+                channelId: live
+                projectId: meals-products-angular
+
+        # Job for Local Testing with act
+        # deploy_local:
         #   runs-on: ubuntu-22.04
+        #   if: ${{ env.ACT }}
+
         #   container:
         #     image: ghcr.io/catthehacker/ubuntu:full-24.04
         #     options: --user root
@@ -84,77 +219,3 @@
         #       with:
         #         start: npm start
         #         config-file: cypress.config.ts
-
-          
-        #     - name: Archive production artifact
-        #       uses: actions/upload-artifact@main
-        #       with:
-        #         name: build
-        #         path: dist/meal-products-frontend/browser
-            
-        #     - name: Download Artifact
-        #       uses: actions/download-artifact@main
-        #       with:
-        #         name: build
-        #         path: dist/meal-products-frontend/browser
-            
-        #     - name: Deploy
-        #       uses: FirebaseExtended/action-hosting-deploy@v0
-        #       with:
-        #         repoToken: ${{ secrets.GITHUB_TOKEN }}
-        #         firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_MEALS_PRODUCTS_ANGULAR }}
-        #         channelId: live
-        #         projectId: meals-products-angular
-
-
-      # CI/CD Github Actions
-      name: Deploy to Firebase Hosting on merge
-
-      on:
-        push:
-          branches:
-            - main
-      
-      jobs:
-        start_angular_app:
-          runs-on: ubuntu-22.04
-
-          steps:
-          - name: Checkout repository
-            uses: actions/checkout@main
-
-          - name: Install Dependencies
-            run: npm i
-
-          - name: Start Angular App
-            run: npm start &
-
-          - name: Run Tests
-            run: npm run test:run
-
-          - name: Build project
-            run: npm run build
-
-          - name: Debug Build Output
-            run: ls -R dist
-
-          - name: Archive production artifact
-            uses: actions/upload-artifact@main
-            with:
-              name: build
-              path: dist/meal-products-frontend/browser
-
-          - name: Download Artifact
-            uses: actions/download-artifact@main
-            with:
-              name: build
-              path: dist/meal-products-frontend/browser
-
-          - name: Deploy
-            uses: FirebaseExtended/action-hosting-deploy@v0
-            with:
-              repoToken: ${{ secrets.GITHUB_TOKEN }}
-              firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_MEALS_PRODUCTS_ANGULAR }}
-              channelId: live
-              projectId: meals-products-angular
-

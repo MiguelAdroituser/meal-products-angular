@@ -1,0 +1,30 @@
+name: Deploy to Firebase Hosting on merge
+
+on:
+    push:
+        branches:
+        - release
+
+jobs:
+    deploy_local:
+        runs-on: ubuntu-22.04
+
+        container:
+            image: ghcr.io/catthehacker/ubuntu:full-24.04
+            options: --user root
+
+        steps:
+        - name: Checkout repository
+          uses: actions/checkout@main
+
+        - name: Install Dependencies
+          run: npm ci
+
+        - name: Build project
+          run: npm run build
+
+        - name: Setup Cypress
+          uses: cypress-io/github-action@v2
+          with:
+            start: npm start
+            config-file: cypress.config.ts
