@@ -28,3 +28,23 @@ jobs:
           with:
             start: npm start
             config-file: cypress.config.ts
+
+        # - name: Archive production artifact
+        #   uses: actions/upload-artifact@main
+        #   with:
+        #     name: build
+        #     path: dist/meal-products-frontend/browser
+        
+        # - name: Download Artifact
+        #   uses: actions/download-artifact@main
+        #   with:
+        #     name: build
+        #     path: dist/meal-products-frontend/browser
+        
+        # - name: Deploy
+        #   uses: FirebaseExtended/action-hosting-deploy@v0
+        #   with:
+        #     repoToken: ${{ secrets.GITHUB_TOKEN }}
+        #     firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_MEALS_PRODUCTS_ANGULAR }}
+        #     channelId: live
+        #     projectId: meals-products-angular
