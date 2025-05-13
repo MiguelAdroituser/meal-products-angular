@@ -4,11 +4,12 @@ import { User } from '../../interfaces/user.interface';
 import { showAlertError } from '../../../mealproducts/sweetAlerts/alerts';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
-import { PermissionService } from '../../services/permission.service';
+// import { PermissionService } from '../../services/permission.service';
 import { QueryFilter } from '../../interfaces/queryfilter.interface';
 import { ApiService } from '../../services/api.service';
 import { BranchCookieService } from '../../services/branch-cookie.service';
 import { BranchService } from '../../services/branch.service';
+import { WebSocketService } from '../../services/web-socket.service';
 
 interface BranchEntity {
   id: number;
@@ -52,7 +53,8 @@ export class LoginPageComponent {
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private permissionService: PermissionService,
+    private webSocketService: WebSocketService,
+    // private permissionService: PermissionService,
     private apiService: ApiService<BranchEntity>,
     private branchService: BranchService
   ){
@@ -79,7 +81,8 @@ export class LoginPageComponent {
     }
   }
 
-  async onLogin() {
+  /* este onlogin se utiliza para github actions. donde simula el login para books, crm */
+  /* async onLogin() {
 
     this.submitted = true;
 
@@ -148,8 +151,8 @@ export class LoginPageComponent {
     }
 
 
-  }
-  /* onLogin(): void {
+  } */
+  onLogin(): void {
 
     const emailControl = this.loginForm.get('email');
     const passwordControl = this.loginForm.get('password');
@@ -176,6 +179,6 @@ export class LoginPageComponent {
       })
 
 
-  } */
+  }
 
 }

@@ -1,7 +1,8 @@
-/* import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 // import { environments } from '../../../environments/environments';
-import { environments } from '../../../environments/environments.prod';
+// import { environments } from '../../../environments/environments.prod';
+import { environments } from '../../../environments/environments';
 import { User } from '../interfaces/user.interface';
 import { Observable, catchError, map, of, tap, throwError } from 'rxjs';
 import { LoginResponse } from '../interfaces/login-reponse.interface';
@@ -72,14 +73,17 @@ export class AuthService {
   }
 
 }
- */
 
 
-import { Injectable } from '@angular/core';
+
+
+/* PARA DEPLOY GIT HUB ACTIONS REQUERÍ ESTE CÓDIGO DONDE SE CAMBIA EL LOGIN POR TEST CRM */
+/* import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 import * as CryptoJS from 'crypto-js'; // Importa la librería CryptoJS
-import { environments } from '../../../environments/environments.prod';
+// import { environments } from '../../../environments/environments.prod';
+import { environments } from '../../../environments/environments';
 import { catchError } from 'rxjs/operators';
 import { Observable, throwError, of } from 'rxjs';
 
@@ -220,6 +224,6 @@ export class AuthService {
     }
     return null;
   }
-}
+} */
 
 

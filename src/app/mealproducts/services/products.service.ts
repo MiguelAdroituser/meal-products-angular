@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, catchError, map, of, tap, throwError } from 'rxjs';
 import { Product } from '../interfaces/product.interface';
+// import { environments } from '../../../environments/environments';
 import { environments } from '../../../environments/environments';
 import { AuthHeaders } from '../interfaces/auth-headers.interface';
 import { AuthService } from '../../auth/services/auth.service';

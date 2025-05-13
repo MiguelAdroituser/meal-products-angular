@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+/* import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 // import { ApiService } from './api.service';
 // import { PermissionEntity } from 'src/app/structure/config/permissions/models/permission.model';
@@ -215,3 +215,4 @@ export class PermissionService {
     return null;
   }
 }
+ */
