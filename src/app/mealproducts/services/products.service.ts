@@ -14,7 +14,8 @@ export class ProductsService {
 
   constructor(
     private http: HttpClient,
-    private authSerice: AuthService
+    private authSerice: AuthService,
+    // private webSocketService: WebSocketService,
   ) { }
 
   getProducts( limit: number, offset: number ):Observable<Product[]> {
@@ -85,8 +86,8 @@ export class ProductsService {
   }
 
   getHeaders(): AuthHeaders {
-    // const token =  this.authSerice.decrypt( localStorage.getItem('token') || '', 'token' );
-    const token =  '';
+    const token =  this.authSerice.decrypt( localStorage.getItem('token') || '', 'token' );
+    // const token =  '';
 
     const headers = new HttpHeaders()
       .set('Authorization', `Bearer ${ token }`);

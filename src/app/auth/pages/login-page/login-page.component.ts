@@ -53,7 +53,7 @@ export class LoginPageComponent {
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private webSocketService: WebSocketService,
+    // private webSocketService: WebSocketService,
     // private permissionService: PermissionService,
     private apiService: ApiService<BranchEntity>,
     private branchService: BranchService

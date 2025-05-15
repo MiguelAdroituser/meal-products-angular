@@ -7,6 +7,8 @@ import { modalAction } from '../../types/modal-action';
 
 import Swal from 'sweetalert2';
 import { showAlertSuccess, showAlertError, showAlertConfirm } from '../../sweetAlerts/alerts';
+import { WebSocketService } from '../../../auth/services/web-socket.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-list-page',
@@ -33,12 +35,53 @@ export class ListPageComponent implements OnInit {
   public startProducts: number = 1;
   public endProducts: number = 1;
 
+  private socketSubscription!: Subscription;
+  
   constructor(
-    private productService: ProductsService
+    private productService: ProductsService,
+    private webSocketService: WebSocketService,
   ) {}
 
   ngOnInit(): void {
       this.loadProducts();
+      this.setupRealTimeUpdates();
+      //test socket connection:
+      // this.webSocketService.connect('prueba desde list-page');
+  }
+
+  ngOnDestroy(): void {
+    if (this.socketSubscription) {
+        this.socketSubscription.unsubscribe();
+    }
+  }
+
+  private setupRealTimeUpdates(): void {
+
+    this.socketSubscription = this.webSocketService.onItemCreated()
+      .subscribe(newItem => {
+        if (this.currentPage === 1) {
+          // Add new item to beginning of list if on first page
+          this.products = [newItem, ...this.products];
+          this.filteredProducts = this.filterProducts(this._searchText);
+          this.totalProducts++;
+          this.setRangePagination(this.products.length);
+          showAlertSuccess('New item added in real-time!');
+        } else {
+          // Just update the count if not on first page
+          this.totalProducts++;
+        }
+      });
+
+    // Handle updated items
+    this.webSocketService.onItemUpdated()
+      .subscribe(updatedItem => {
+        const index = this.products.findIndex(p => p.id === updatedItem.id);
+        if (index !== -1) {
+          this.products[index] = updatedItem;
+          this.filteredProducts = this.filterProducts(this._searchText);
+          showAlertSuccess('Item updated in real-time!');
+        }
+      });
   }
 
   loadProducts(): void {
